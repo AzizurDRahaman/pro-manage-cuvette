@@ -6,11 +6,20 @@ import { SlLock } from "react-icons/sl";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { IoPersonOutline } from "react-icons/io5";
 import Button from "../../UI/Buttons/Button";
+import { BASE_URL } from "../../../constants";
+import { toast } from 'react-toastify';
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
-
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  })
 
   const togglePassword = () => {
     setShowPassword(!showPassword);
@@ -18,6 +27,33 @@ export default function Register() {
   const toggleConfirmPassword = () => {
     setShowConfirmPassword(!showConfirmPassword);
   };
+
+  const handleSubmit = async(e) => {
+    e.preventDefault();
+    try{
+      const {confirmPassword, ...rest} = formData;
+      if(confirmPassword !== rest.password){
+        alert("Passwords do not match");
+        return;
+      }
+      const response = await fetch(`${BASE_URL}/auth/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(rest),
+      });
+      const data = await response.json();
+      if(response.status === 201){
+        toast.success(data.message);
+        navigate("/sign-in");
+      }else{
+        toast.error(data.message);
+      }
+    }catch(err){
+      toast.error(err.message);
+    }
+  }
 
   return (
     <>
@@ -33,18 +69,18 @@ export default function Register() {
         </div>
         <div className={styles.form}>
             <h1>Register</h1>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className={styles.inputBox}>
             <IoPersonOutline />
-              <input type="email" id="name" placeholder="Name" />
+              <input type="text" id="name" placeholder="Name" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} />
             </div>
             <div className={styles.inputBox}>
             <CiMail />
-              <input type="email" id="email" placeholder="Email" />
+              <input type="email" id="email" placeholder="Email" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} />
             </div>
             <div className={`${styles.inputBox} ${styles.password}`}>
             <SlLock />
-              <input type={showPassword ? "text" : "password"} id="password" placeholder="Password" />
+              <input type={showPassword ? "text" : "password"} id="password" placeholder="Password" value={formData.password} onChange={(e) => setFormData({ ...formData, password: e.target.value })} />
               <span onClick={togglePassword} >
                 { showPassword && <FaRegEye />}
                 { !showPassword && <FaRegEyeSlash />}
@@ -52,7 +88,7 @@ export default function Register() {
             </div>
             <div className={`${styles.inputBox} ${styles.password}`}>
             <SlLock />
-              <input type={showConfirmPassword ? "text" : "password"} id="confirm-password" placeholder="Confirm Password" />
+              <input type={showConfirmPassword ? "text" : "password"} id="confirm-password" placeholder="Confirm Password" value={formData.confirmPassword} onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })} />
               <span onClick={toggleConfirmPassword} >
                 { showConfirmPassword && <FaRegEye />}
                 { !showConfirmPassword && <FaRegEyeSlash />}
@@ -64,7 +100,7 @@ export default function Register() {
             Have an account?
           </p>
           <Button fill={"outlined"} color={"#17A2B8"} onClick={() => {
-            window.location.href = "/sign-in"
+            navigate("/sign-in");
           }}>Log in</Button>
         </div>
       </div>
