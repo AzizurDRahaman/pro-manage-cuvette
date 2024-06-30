@@ -14,6 +14,9 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    peoples:{
+        type: String
+    },
     tasks: [
         {
             type: mongoose.Schema.Types.ObjectId,

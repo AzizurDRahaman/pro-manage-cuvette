@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import authRoutes from "./routes/auth.route.js";
+import taskRoutes from "./routes/task.route.js";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from 'url';
@@ -43,6 +44,7 @@ app.use((req, res, next) => {
 
 // TODO: ADD ROUTES
 app.use("/api/auth", authRoutes);
+app.use("/api/task", taskRoutes);
 
 app.get("/", (req, res) => {
     res.send("Hello World!").status(200);

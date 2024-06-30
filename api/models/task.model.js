@@ -5,6 +5,10 @@ const taskSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  author:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
   priority: {
     type: String,
     required: true,
