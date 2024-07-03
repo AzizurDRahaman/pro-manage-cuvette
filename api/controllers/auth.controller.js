@@ -62,8 +62,72 @@ export const loginUser = async (req, res) => {
       userId: user._id,
       name: user.name,
       email: user.email,
+      peoples: user.peoples,
     });
   } catch (err) {
     next(err);
   }
 };
+
+
+export const addPeople = async (req, res) => {
+  try{
+    const { email, userId } = req.body;
+  const user = await User.findById(userId);
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
+  }
+  if(user.peoples.includes(email)){
+    return res.status(400).json({ message: "User already added" });
+  }
+  user.peoples.push(email);
+  await user.save();
+  res.status(200).json({ message: "People added successfully" });
+  }catch(error){
+    res.status(500).json({ message: "Internal server error", error: error.message });
+  }
+}
+
+export const getUserInfo = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    const { password, ...others } = user._doc;
+    res.status(200).json(others);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Internal server error", error: error.message });
+  }
+}
+
+export const updateUser = async (req, res) => {
+  try {
+    const { name, email, old_password, update_password } = req.body;
+    const { userId } = req.params;
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const isMatch = await bcrypt.compare(old_password, user.password);
+    if (!isMatch) {
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
+
+    const hashedPassword = await bcrypt.hash(update_password, 10);
+    user.name = name;
+    user.email = email;
+    user.password = hashedPassword;
+    await user.save();
+    res.status(200).json({ message: "User updated successfully" });
+
+  }catch (error) {
+    res
+      .status(500)
+      .json({ message: "Internal server error", error: error.message });
+  }
+}

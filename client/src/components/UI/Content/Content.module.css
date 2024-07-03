@@ -1,0 +1,25 @@
+.body{
+    background-color: #EEF2F5;
+    min-width: 17rem;
+    height: 31rem;
+    padding: 1rem 1.5rem;
+    scrollbar-width: 0;
+    border-radius: 25px;
+    
+}
+
+.heading{
+    display: flex;
+    justify-content: space-between;
+}
+
+.heading span{
+    display: flex;
+    gap: 1rem;
+}
+
+.tasks{
+    max-height: 30rem;
+    overflow-y: scroll;
+    scrollbar-width: 0px !important;
+}

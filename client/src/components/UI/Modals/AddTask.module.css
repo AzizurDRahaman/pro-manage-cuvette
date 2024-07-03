@@ -1,0 +1,106 @@
+sup{
+    color: red;
+    font-weight: bold;
+}
+
+.form input{
+    width: 40rem;
+    padding: 1rem 0.5rem;
+    border: 1px solid #767575;
+    border-radius: 4px;
+    margin-top: 1rem;
+}
+.form .priority{
+    margin: 1rem 0;
+    display: flex;
+    align-items: center;
+    gap: 1rem
+}
+
+.form .priority div{
+    display: flex;
+    align-items: center;
+    border: 1px solid #767575;
+    padding: 0.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.checklist{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #767575;
+    border-radius: 4px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.checklist input[type="text"]:focus{
+    outline: none;
+}
+.checklist input[type="text"]{
+    width: 35rem;
+    border: none;
+    padding: 0;
+    margin: 1rem;
+}
+
+.checklist input[type="checkbox"]{
+    margin: 0;
+    /* margin-right: 1rem;  */
+    width: fit-content;
+}
+
+.checklistContainer{
+    height: 20rem;
+    overflow-y: scroll;
+}
+
+.checklistContainer span{
+    cursor: pointer;
+    color: #18B0FF;
+}
+
+.btnContainer{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.btnContainer input{
+    width: fit-content;
+}
+
+.btnContainer .buttons{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.btnContainer .buttons button{
+    padding: 1rem 2rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.active{
+    background-color: #EEECEC;
+    transition: all 0.3s ease;
+}
+
+.assign{
+    display: flex;
+    align-items: center;
+    gap: 1rem
+}
+
+.assign select{
+    padding: 1rem;
+    border: 1px solid #767575;
+    border-radius: 4px;
+    width: 84%;
+}

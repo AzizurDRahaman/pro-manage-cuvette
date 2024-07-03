@@ -1,0 +1,35 @@
+.container section{
+    padding-top: 1rem;
+    margin-left: 1rem;
+}
+
+.container .heading{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 1rem;
+}
+
+.board{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    padding-left: 0;
+}
+
+.board div{
+    display: flex;
+    align-items: center;
+    gap: 1rem
+}
+
+.board div span{
+    color: #707070;
+}
+
+.container select{
+    border: none;
+    outline: none;
+    cursor: pointer;
+}

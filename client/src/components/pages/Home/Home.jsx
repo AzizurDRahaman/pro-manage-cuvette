@@ -1,10 +1,13 @@
 import React from 'react'
-import Sidebar from '../../UI/Sidebar/Sidebar'
+import styles from './Home.module.css'
+import Header from '../../UI/Header/Header'
+import Body from '../../UI/Body/Body'
 
 export default function Home() {
   return (
-    <>
-     <Sidebar/>
-    </>
+    <div className={styles.container}>
+     <Header/>
+     <Body/>
+    </div>
   )
 }

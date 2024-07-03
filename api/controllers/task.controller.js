@@ -26,7 +26,6 @@ export const updateTask = async (req, res) => {
     const { id } = req.params;
     const { title, priority, assignedTo, dueDate, checklist, status } =
       req.body;
-
     const updatedTask = await Task.findByIdAndUpdate(
       id,
       { title, priority, assignedTo, dueDate, checklist, status },
@@ -92,4 +91,63 @@ export const getTaskById = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: "Error getting task", error });
   }
+}
+
+export const getTaskByStatus = async (req, res) => {
+  try {
+    const { status } = req.query;
+    const tasks = await Task.find({ status });
+    res.status(200).json({ tasks });
+  } catch (error) {
+    res.status(500).json({ message: "Error getting tasks", error });
+  }
+}
+
+export const taskDetails = async (req, res) => {
+  try {
+    const tasks = await Task.find();
+    let back=0;
+    let todo=0;
+    let progress=0;
+    let completed=0;
+    tasks.forEach((task) => {
+      if (task.status == "backlog") {
+        back++;
+      } else if (task.status == "todo") {
+        todo++;
+      } else if (task.status == "progress") {
+        progress++;
+      } else if (task.status == "done") {
+        completed++;
+      }
+    });
+    let high=0;
+    let medium=0;
+    let low=0;
+    tasks.forEach((task) => {
+      if (task.priority == "high") {
+        high++;
+      } else if (task.priority == "medium") {
+        medium++;
+      } else if (task.priority == "low") {
+        low++;
+      }
+    });
+    let dueDate=0;
+    tasks.forEach((task) => {
+      if (task.dueDate != null) {
+        dueDate++;
+      }
+    });
+    res.status(200).json({
+      backlog: back,
+      todo: todo,
+      in_progress: progress,
+      completed: completed,
+      high: high,
+      medium: medium,
+      low: low,
+      due_date: dueDate
+    });
+  } catch (error) {}
 }

@@ -1,0 +1,29 @@
+.body{
+    padding: 1rem 1rem 1rem 2rem;
+}
+
+.form{
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 20rem;
+    height: 100%;
+    padding: 0 5rem 0 0;
+    gap: 1rem;
+}
+
+.inputBox{
+    border: 1px solid #D0D0D0;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+}
+
+.inputBox input{
+    padding: 0.5rem;
+    width: 100%;
+    border: none;
+    outline: none;
+}
